@@ -67,7 +67,7 @@ struct change {
 
 struct changes {
     int8_t num;
-    struct change ob[MAX_WALLS];
+    struct change ob[MAX_WALLS * 2 + 1];
 };
 
 int16_t mulsine(int16_t num, uint8_t ang);

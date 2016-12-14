@@ -10,8 +10,8 @@
 
 struct stris stris = {MAX_WALLS, {
     {160,120, 480,240, 160,360, 1, 3}, 
-    {150,130, 470,250, 150,370, 2, 5}, 
-    {140,140, 460,260, 140,380, 3, 7} 
+    {140,130, 470,250, 150,370, 2, 5}, 
+    {120,140, 460,260, 140,380, 3, 7} 
 }};
 struct crit_points crit_points;
 struct changes changes;
@@ -20,14 +20,17 @@ void draw_scanline(SDL_Renderer *renderer, uint16_t line) {
     uint16_t p = 0;
     for (int i = 0; i < changes.num; i++) {
         const struct change change = *(changes.ob + i);
+	printf("%d, %d\n", change.start, change.colour);
         SDL_SetRenderDrawColor(renderer, 255 * !!(change.colour & 0b100), 255 * !!(change.colour & 0b010), 255 * !!(change.colour & 0b001), 255);
         SDL_RenderDrawLine(renderer, change.start, line, SCREEN_WIDTH - 1, line);
     }
 }
 
+
 void draw_frame(SDL_Renderer *renderer) {
     sort_stris();
-    for (uint16_t line = 0; line < SCREEN_HEIGHT; line++) {
+    for (uint16_t line = 0; line < SCREEN_HEIGHT; line += 1) {
+	printf("line %d\n", line);
 	stris_to_crit_points(line);
         sort_crit_points();
         //printf("crit_points->num == %d\n", crit_points->num);
